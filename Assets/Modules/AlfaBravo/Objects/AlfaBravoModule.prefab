@@ -40,6 +40,7 @@ GameObject:
   - component: {fileID: 33550053701309064}
   - component: {fileID: 65257892095956026}
   - component: {fileID: 23186834695052688}
+  - component: {fileID: 114283635502180062}
   m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
@@ -211,6 +212,7 @@ GameObject:
   - component: {fileID: 33953598259734372}
   - component: {fileID: 65707117772858744}
   - component: {fileID: 23331464780264658}
+  - component: {fileID: 114060013342333424}
   m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
@@ -229,6 +231,7 @@ GameObject:
   - component: {fileID: 33066673791792386}
   - component: {fileID: 23501311366247402}
   - component: {fileID: 114751784090902694}
+  - component: {fileID: 114095518772468692}
   m_Layer: 0
   m_Name: SkipButton
   m_TagString: Untagged
@@ -746,6 +749,32 @@ TextMesh:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
+--- !u!114 &114060013342333424
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1882658941250108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1005838349, guid: 45b809be76fd7a3468b6f517bced6f28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShaderNames:
+  - Unlit/Color
+--- !u!114 &114095518772468692
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1988211803921718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1005838349, guid: 45b809be76fd7a3468b6f517bced6f28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShaderNames:
+  - KT/Mobile/DiffuseTint
 --- !u!114 &114210030695818394
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -758,10 +787,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   display: {fileID: 1604619651771446}
+  kMAudio: {fileID: 114519548905714800}
+  bombInfo: {fileID: 114753501171084414}
   skipButton: {fileID: 114751784090902694}
   stage: {fileID: 114534642215331620}
   letterPrefab: {fileID: 114443710187802256, guid: 20e8c14d59791b445ba0239ba28f4cf5,
     type: 2}
+  shouldPassOnActivation: 0
+  skipsToAnswer: 0
+  startingTime: 0
+  nextExpectedAnswers: 
 --- !u!114 &114230481166392220
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -810,7 +845,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShaderNames:
-  - KT/Mobile/Diffuse
+  - KT/Mobile/DiffuseTint
+--- !u!114 &114283635502180062
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1040274063880288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1005838349, guid: 45b809be76fd7a3468b6f517bced6f28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShaderNames:
+  - Unlit/Color
 --- !u!114 &114329738196610876
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -885,7 +933,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ModuleType: alfa_bravo
-  ModuleDisplayName: Alfa Bravo
+  ModuleDisplayName: Alfa-Bravo
   RequiresTimerVisibility: 0
 --- !u!114 &114751784090902694
 MonoBehaviour:

@@ -5,6 +5,9 @@ using UnityEngine;
 public class Character : MonoBehaviour {
 	public const char NOT_A_CHARACTER = '\0';
 
+	public delegate void OnActualizedHandler();
+	public event OnActualizedHandler Actualized;
+
 	public TextMesh textMesh;
 	public char minCharacter;
 	public char maxCharacter;
@@ -20,6 +23,7 @@ public class Character : MonoBehaviour {
 		private set {
 			if (_activeCharacter == value) return;
 			_activeCharacter = value;
+			if (_activeCharacter == _character && Actualized != null) Actualized.Invoke();
 			textMesh.text = _activeCharacter.ToString();
 			UpdateMeshColor();
 		}
