@@ -7,6 +7,10 @@
 		"editor.insertSpaces": false,
 		"editor.tabSize": 4,
 	},
+	"[html]": {
+		"editor.insertSpaces": true,
+		"editor.tabSize": 4,
+	},
 	"files.exclude": {
 		"steam_api64.dll": true,
 		"steam_appid.txt": true,

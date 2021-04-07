@@ -2,15 +2,12 @@
 <html>
 
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-    <meta charset="utf-8" />
-
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1">
     <title>Alfa-Bravo — Keep Talking and Nobody Explodes Module</title>
-
-    <meta name="viewport" content="initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="css/font.css" />
     <link rel="stylesheet" type="text/css" href="css/normalize.css" />
     <link rel="stylesheet" type="text/css" href="css/main.css" />
-    <link rel="stylesheet" type="text/css" href="css/font.css" />
     <script src="js/ktane-utils.js"></script>
 </head>
 
@@ -56,13 +53,23 @@
                     The module consists of a small one-digit display, an 8-letter display and a button labeled "SKIP".
                 </p>
 
-                <p>For each letter displayed, add a value and a letter from the table below (A=0, B=1, etc).
-                    If the resulting string contains two intersecting substrings "AB" and "BA",
+                <p>Add to each displayed letter the number from the column called "Value" and
+                    the numeric position of the letter (counting from 0) that is below the digit from the small display.
+                    Alphabet loops, to if you ever go past letter Z, loop back to letter A.
+
+                <p>If the resulting string contains two intersecting substrings "AB" and "BA",
                     press the letter that is their intersection.
                     Pressing the correct letter will solve the module, pressing incorrect letter will cause a strike.
                     If there are no such intersecting substrings,
                     you can press the "SKIP" button to generate new letters.
                     The "SKIP" button will never cause a strike.</p>
+
+                <p>First string with valid answer will be generated within four stages.
+                    When stage with answer skipped module will generate new one within next four stages and so on.
+                    If the resulting string contains several correct intersections, press any of them.
+                    Since the second letter depends on time, it can be generated a little more than A or B,
+                    in this case you can either hold your solution and enter it when it is relevant,
+                    or press "SKIP" and keep looking for another answer.</p>
 
                 <table>
                     <tbody id="addictions-table">
