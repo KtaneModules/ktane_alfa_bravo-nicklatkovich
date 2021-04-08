@@ -11,7 +11,7 @@ public class AlfaBravoModule : MonoBehaviour {
 
 	private static int _moduleIdCounter = 1;
 
-	public static readonly string[] addictions = new string[LETTERS_COUNT] {
+	public static readonly string[] addendum = new string[LETTERS_COUNT] {
 		"LWHTJNFSZO",
 		"NFKMUIGVHD",
 		"MGIJVFEYSW",
@@ -172,16 +172,16 @@ public class AlfaBravoModule : MonoBehaviour {
 		return null;
 	}
 
-	public int GetLetterAddiction(int index) {
-		char letterAddiction = addictions[index][stage.character - '0'];
-		int valueAddiction = GetValueAddiction(index);
-		int result = letterAddiction - 'A' + valueAddiction;
-		Debug.LogFormat("[Alfa-Bravo #{0}] Current addiction to letter #{1} is {2} ({3}+'{4}')", moduleId, index + 1,
-			result, valueAddiction, letterAddiction);
+	public int GetLetterAddendum(int index) {
+		char letterAddendum = addendum[index][stage.character - '0'];
+		int valueAddendum = GetValueAddendum(index);
+		int result = letterAddendum - 'A' + valueAddendum;
+		Debug.LogFormat("[Alfa-Bravo #{0}] Current addendum to letter #{1} is {2} ({3}+'{4}')", moduleId, index + 1,
+			result, valueAddendum, letterAddendum);
 		return result;
 	}
 
-	public int GetValueAddiction(int index) {
+	public int GetValueAddendum(int index) {
 		switch (index) {
 			case 0: return bombInfo.GetPortCount();
 			case 1: return startingTime;
@@ -212,8 +212,8 @@ public class AlfaBravoModule : MonoBehaviour {
 	}
 
 	public char MakeMutations(int index, char character) {
-		int addiction = GetLetterAddiction(index);
-		return (char)((character - 'A' + addiction) % 26 + 'A');
+		int addendum = GetLetterAddendum(index);
+		return (char)((character - 'A' + addendum) % 26 + 'A');
 	}
 
 	private int GetRemaingMinutes() {
@@ -237,8 +237,8 @@ public class AlfaBravoModule : MonoBehaviour {
 
 	private void SetLetterToExpected(int index, char expected) {
 		Debug.LogFormat("[Alfa-Bravo #{0}] Trying to set resulting letter #{1} to {2}", moduleId, index + 1, expected);
-		int addiction = GetLetterAddiction(index);
-		int newValue = expected - 'A' - addiction;
+		int addendum = GetLetterAddendum(index);
+		int newValue = expected - 'A' - addendum;
 		if (index == 2) {
 			int remaingMinutes = GetRemaingMinutes();
 			if (remaingMinutes > 0) {

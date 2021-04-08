@@ -9,13 +9,35 @@
     <link rel="stylesheet" type="text/css" href="css/normalize.css" />
     <link rel="stylesheet" type="text/css" href="css/main.css" />
     <script src="js/ktane-utils.js"></script>
+    <style>
+        .flavour-text b {
+            text-transform: uppercase;
+        }
+    </style>
+    <script>
+        const data = [
+            "LWHTJNFSZO",
+            "NFKMUIGVHD",
+            "MGIJVFEYSW",
+            "CQLYPZUTDX",
+            "DTZSBGHFPU",
+            "EBRGCHWJNV",
+            "GIABZPMQKH",
+            "OLSZGUNHRP",
+        ];
+        document.addEventListener("DOMContentLoaded", () => {
+            console.log("123");
+            const table = document.getElementById("data-table");
+            for (let y = 0; y < data.length; y++) {
+                for (let x = 0; x < data[y].length; x++) {
+                    const node = document.createElement("td");
+                    node.innerText = data[y][x];
+                    table.children[y + 2].appendChild(node);
+                }
+            }
+        });
+    </script>
 </head>
-
-<style>
-    .flavour-text b {
-        text-transform: uppercase;
-    }
-</style>
 
 <body>
     <div class="section">
@@ -53,26 +75,48 @@
                     The module consists of a small one-digit display, an 8-letter display and a button labeled "SKIP".
                 </p>
 
-                <p>Add to each displayed letter the number from the column called "Value" and
-                    the numeric position of the letter (counting from 0) that is below the digit from the small display.
-                    Alphabet loops, to if you ever go past letter Z, loop back to letter A.
+                <p>
+                    Convert each displayed letter into a number between 0-25 (A=0, B=1 etc.).
+                    Then, using the table on the next page, add the number from the "Value" column and
+                    the numeric position (0-25) of the letter below the digit in the small display,
+                    that are in the row corresponding to the letter's position on the large display.
+                    If any resulting numbers are greater than 25, subtract 26 repeatedly until
+                    the number is between 0 and 25, inclusive.
+                    Convert these numbers back to letters.
+                </p>
 
-                <p>If the resulting string contains two intersecting substrings "AB" and "BA",
+                <p>
+                    If the resulting string contains two intersecting substrings "AB" and "BA",
                     press the letter that is their intersection.
-                    Pressing the correct letter will solve the module, pressing incorrect letter will cause a strike.
+                    Pressing the correct letter will solve the module,
+                    pressing an incorrect letter will cause a strike.
+                    If the resulting string contains several correct intersections,
+                    pressing any of them will solve the module.
                     If there are no such intersecting substrings,
                     you can press the "SKIP" button to generate new letters.
-                    The "SKIP" button will never cause a strike.</p>
+                    The "SKIP" button will never cause a strike, even if intersecting substrings are present.
+                </p>
 
-                <p>First string with valid answer will be generated within four stages.
-                    When stage with answer skipped module will generate new one within next four stages and so on.
-                    If the resulting string contains several correct intersections, press any of them.
-                    Since the second letter depends on time, it can be generated a little more than A or B,
-                    in this case you can either hold your solution and enter it when it is relevant,
-                    or press "SKIP" and keep looking for another answer.</p>
-
+                <p>
+                    The first string with a valid answer will be generated within the four stages of the module.
+                    When a string with a valid answer is skipped,
+                    the module will generate a valid answer within the next four stages.
+                    The number of minutes remaining, the number of solved modules and 2-factor codes will be checked
+                    when an answer is submitted, not when the string is generated.
+                </p>
+            </div>
+            <div class="page-footer relative-footer">Page 1 of 2</div>
+        </div>
+        <div class="page page-bg-02">
+            <div class="page-header">
+                <span class="page-header-doc-title">
+                    Keep Talking and Nobody Explodes Mod
+                </span>
+                <span class="page-header-section-title">Alfa-Bravo</span>
+            </div>
+            <div class="page-content">
                 <table>
-                    <tbody id="addictions-table">
+                    <tbody id="data-table">
                         <tr>
                             <td rowspan="2">Letter number</td>
                             <td rowspan="2">Value</td>
@@ -126,30 +170,9 @@
                     </tbody>
                 </table>
             </div>
-            <div class="page-footer relative-footer">Page 1 of 1</div>
+            <div class="page-footer relative-footer">Page 2 of 2</div>
         </div>
     </div>
 </body>
 
 </html>
-
-<script>
-    const addictions = [
-        "LWHTJNFSZO",
-        "NFKMUIGVHD",
-        "MGIJVFEYSW",
-        "CQLYPZUTDX",
-        "DTZSBGHFPU",
-        "EBRGCHWJNV",
-        "GIABZPMQKH",
-        "OLSZGUNHRP",
-    ];
-    const table = document.getElementById("addictions-table");
-    for (let y = 0; y < addictions.length; y++) {
-        for (let x = 0; x < addictions[y].length; x++) {
-            const node = document.createElement("td");
-            node.innerText = addictions[y][x];
-            table.children[y + 2].appendChild(node);
-        }
-    }
-</script>

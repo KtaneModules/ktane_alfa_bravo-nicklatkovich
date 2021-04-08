@@ -24,6 +24,8 @@ Manual/img/*
 !Manual/img/Component/
 Manual/img/Component/*
 Manual/js/
+Manual/pdfs/*
+
 Assembly-CSharp*
 /*.sln
 obj/
@@ -34,4 +36,5 @@ Models/*
 !Assets/Modules/AlfaBravo
 !Manual/img/Component/Alfa-Bravo.svg
 !Manual/img/Component/Alfa-Bravo-Inkscape.svg
+!Manual/pdfs/Modules/Alfa-Bravo.pdf
 !Models/AlfaBravo.blend
