@@ -30,7 +30,7 @@ public class AlfaBravoModule : MonoBehaviour {
 	public Letter letterPrefab;
 
 	public readonly string TwitchHelpMessage =
-		"`!{0} 3` - press letter by its position | `!{0} skip` - press button with label \"SKIP\"";
+		"\"!{0} 3\" to press letter by its position | \"!{0} skip\" to press button with label SKIP";
 
 	public readonly Letter[] letters = new Letter[LETTERS_COUNT];
 	public bool shouldPassOnActivation;
@@ -60,6 +60,9 @@ public class AlfaBravoModule : MonoBehaviour {
 	public int moduleId {
 		get { return _moduleId; }
 	}
+
+	private bool _forceSolved = false;
+	public bool forceSolved { get { return _forceSolved; } }
 
 	// Souvenir data
 	private char _pressedLetter;
@@ -94,6 +97,7 @@ public class AlfaBravoModule : MonoBehaviour {
 			float x = LETTERS_INTERVAL * (i - (LETTERS_COUNT - 1) / 2f);
 			letter.transform.localPosition = new Vector3(x, LETTER_HEIGHT, 0f);
 			letter.transform.localRotation = new Quaternion();
+			letter.transform.localScale = Vector3.one;
 			letter.Actualized += () => OnLetterActualized();
 			KMSelectable letterSelectable = letter.GetComponent<KMSelectable>();
 			letterSelectable.Parent = selfSelectable;
@@ -131,7 +135,11 @@ public class AlfaBravoModule : MonoBehaviour {
 		_letterToTheLeftOfPressedOne = letters[index - 1].character;
 		_letterToTheRightOfPressedOne = letters[index + 1].character;
 		_displayedDigit = stage.character - '0';
-		shouldPassOnActivation = (bool)correct;
+		ProcessLetter((bool)correct);
+	}
+
+	private void ProcessLetter(bool solved) {
+		shouldPassOnActivation = solved;
 		active = false;
 		letters[0].character = Character.NOT_A_CHARACTER;
 		letters[LETTERS_COUNT - 1].character = Character.NOT_A_CHARACTER;
@@ -164,12 +172,17 @@ public class AlfaBravoModule : MonoBehaviour {
 
 	public KMSelectable[] ProcessTwitchCommand(string command) {
 		command = command.Trim().ToLower();
-		Debug.Log(command);
+		if (command.StartsWith("press ")) command = command.Skip(6).Join("");
 		if (Regex.IsMatch(command, @"[1-8]")) {
 			return new KMSelectable[] { letters[int.Parse(command) - 1].GetComponent<KMSelectable>() };
 		}
 		if (command == "skip") return new KMSelectable[] { skipButton };
 		return null;
+	}
+
+	public void TwitchHandleForcedSolve() {
+		_forceSolved = true;
+		ProcessLetter(true);
 	}
 
 	public int GetLetterAddendum(int index) {
