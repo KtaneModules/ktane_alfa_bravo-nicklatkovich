@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -127,15 +128,20 @@ public class AlfaBravoModule : MonoBehaviour {
 		RandomizeLetters();
 	}
 
-	public void PressLetter(int index) {
-		if (!stage.actual) return;
+	public bool? PressLetter(int index) {
+		if (!stage.actual) return null;
 		bool? correct = ButtonIsCorrect(index);
-		if (correct == null) return;
-		_pressedLetter = letters[index].character;
-		_letterToTheLeftOfPressedOne = letters[index - 1].character;
-		_letterToTheRightOfPressedOne = letters[index + 1].character;
-		_displayedDigit = stage.character - '0';
+		if (correct == null) return null;
+		Debug.LogFormat("[Alfa-Bravo #{0}] Letter #{1} pressed. Answer is {2}", moduleId, index + 1,
+			correct == true ? "correct" : "wrong");
+		if (correct == true) {
+			_pressedLetter = letters[index].character;
+			_letterToTheLeftOfPressedOne = letters[index - 1].character;
+			_letterToTheRightOfPressedOne = letters[index + 1].character;
+			_displayedDigit = stage.character - '0';
+		}
 		ProcessLetter((bool)correct);
+		return correct;
 	}
 
 	private void ProcessLetter(bool solved) {
@@ -170,14 +176,20 @@ public class AlfaBravoModule : MonoBehaviour {
 		} else skipsToAnswer -= 1;
 	}
 
-	public KMSelectable[] ProcessTwitchCommand(string command) {
+	public IEnumerator ProcessTwitchCommand(string command) {
 		command = command.Trim().ToLower();
 		if (command.StartsWith("press ")) command = command.Skip(6).Join("");
 		if (Regex.IsMatch(command, @"[1-8]")) {
-			return new KMSelectable[] { letters[int.Parse(command) - 1].GetComponent<KMSelectable>() };
+			bool? solved = PressLetter(int.Parse(command) - 1);
+			yield return null;
+			if (solved != null) yield return solved == true ? "solve" : "strike";
+			yield break;
 		}
-		if (command == "skip") return new KMSelectable[] { skipButton };
-		return null;
+		if (command == "skip") {
+			yield return null;
+			yield return new KMSelectable[] { skipButton };
+		}
+		yield break;
 	}
 
 	public void TwitchHandleForcedSolve() {

@@ -14,8 +14,11 @@ MonoBehaviour:
   id: alfa_bravo
   title: Alfa-Bravo
   author: NickLatkovich
-  description: The module in which you need to decrypt the received messages and find
-    two substrings intersection.
+  description: "[h1]About[/h1]\r\nThe module in which you need to decrypt the received
+    messages and find two substrings intersection.\r\n\r\n[h1]Manual[/h1]\r\n[url=https://ktane.timwi.de/HTML/Alfa-Bravo.html]HTML[/url]\r\n[url=https://ktane.timwi.de/PDF/Alfa-Bravo.pdf]PDF[/url]\r\n\r\n[h1]Module
+    ID[/h1]\r\n[code]alfa_bravo[/code]\r\n\r\n[h1]Twitch Plays implementation[/h1]\r\nPress
+    letter by its position:\r\n[code]press 3[/code]\r\nPress SKIP button:\r\n[code]press
+    skip[/code]\r\n\"press\" is optional\r"
   version: 0.1.0
   outputFolder: build
   previewImage: {fileID: 2800000, guid: d9becb43ba70ebc4da7daa31a2ebf226, type: 3}
