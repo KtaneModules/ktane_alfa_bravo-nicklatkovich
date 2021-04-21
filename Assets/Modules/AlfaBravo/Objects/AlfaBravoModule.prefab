@@ -210,7 +210,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4966144838971392}
   - component: {fileID: 33953598259734372}
-  - component: {fileID: 65707117772858744}
   - component: {fileID: 23331464780264658}
   - component: {fileID: 114060013342333424}
   m_Layer: 0
@@ -678,18 +677,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!65 &65707117772858744
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1882658941250108}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!95 &95009869377457114
 Animator:
   serializedVersion: 3
@@ -786,17 +773,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2440939a73e51f4f9641baabc398e57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  display: {fileID: 1604619651771446}
-  kMAudio: {fileID: 114519548905714800}
-  bombInfo: {fileID: 114753501171084414}
-  skipButton: {fileID: 114751784090902694}
-  stage: {fileID: 114534642215331620}
-  letterPrefab: {fileID: 114443710187802256, guid: 20e8c14d59791b445ba0239ba28f4cf5,
+  Display: {fileID: 1604619651771446}
+  Audio: {fileID: 114519548905714800}
+  BombInfo: {fileID: 114753501171084414}
+  BombModule: {fileID: 114598102084040194}
+  SelfSelectable: {fileID: 114230873450921302}
+  SkipButton: {fileID: 114751784090902694}
+  Stage: {fileID: 114534642215331620}
+  LetterPrefab: {fileID: 114443710187802256, guid: 20e8c14d59791b445ba0239ba28f4cf5,
     type: 2}
-  shouldPassOnActivation: 0
-  skipsToAnswer: 0
-  startingTime: 0
-  nextExpectedAnswers: 
 --- !u!114 &114230481166392220
 MonoBehaviour:
   m_ObjectHideFlags: 1
