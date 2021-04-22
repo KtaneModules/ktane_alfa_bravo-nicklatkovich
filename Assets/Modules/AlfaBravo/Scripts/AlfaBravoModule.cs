@@ -1,5 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using KModkit;
@@ -11,7 +12,6 @@ public class AlfaBravoModule : MonoBehaviour {
 	private const float LETTERS_INTERVAL = 0.014f;
 
 	private static int moduleIdCounter = 1;
-
 	private static readonly string[] addendum = new string[LETTERS_COUNT] {
 		"LWHTJNFSZO",
 		"NFKMUIGVHD",
@@ -22,6 +22,7 @@ public class AlfaBravoModule : MonoBehaviour {
 		"GIABZPMQKH",
 		"OLSZGUNHRP",
 	};
+	private static readonly HashSet<int> staticLetterIndices = new HashSet<int> { 0, 1, 4, 6, 7 };
 
 	public GameObject Display;
 	public KMAudio Audio;
@@ -32,6 +33,8 @@ public class AlfaBravoModule : MonoBehaviour {
 	public Character Stage;
 	public Letter LetterPrefab;
 
+	public readonly string TwitchHelpMessage = "\"!{0} 3\" to press letter by its position | \"!{0} skip\" to press button with label SKIP";
+
 	private bool _active = false;
 	public bool active {
 		get { return _active; }
@@ -41,6 +44,24 @@ public class AlfaBravoModule : MonoBehaviour {
 			if (!active) foreach (Letter letter in letters) letter.active = value;
 		}
 	}
+
+	private bool _forceSolved = true;
+	public bool forceSolved { get { return _forceSolved; } }
+
+	private bool _solved = false;
+	public bool solved { get { return _solved; } }
+
+	private char _souvenirPressedLetter = (char)0;
+	public char souvenirPressedLetter { get { return _souvenirPressedLetter; } }
+
+	private char _souvenirLetterToTheLeftOfPressedOne = (char)0;
+	public char souvenirLetterToTheLeftOfPressedOne { get { return _souvenirLetterToTheLeftOfPressedOne; } }
+
+	private char _souvenirLetterToTheRightOfPressedOne = (char)0;
+	public char souvenirLetterToTheRightOfPressedOne { get { return _souvenirLetterToTheRightOfPressedOne; } }
+
+	private char _souvenirDisplayedDigit = (char)0;
+	public char souvenirDisplayedDigit { get { return _souvenirDisplayedDigit; } }
 
 	private int _remainingMinutesCount;
 	public int remainingMinutesCount {
@@ -84,14 +105,11 @@ public class AlfaBravoModule : MonoBehaviour {
 
 	private bool _2faPresent;
 	private bool activated = false;
-	private bool forceSolved = true;
 	private bool readyToSkip = false;
 	private bool shouldPassOnActivation;
-	private bool solved = false;
 	private int moduleId;
 	private int startingTime;
 	private int skipsCount = 0;
-	private string TwitchHelpMessage = "\"!{0} 3\" to press letter by its position | \"!{0} skip\" to press button with label SKIP";
 	private char[] chars = new char[LETTERS_COUNT];
 	private Letter[] letters = new Letter[LETTERS_COUNT];
 
@@ -144,8 +162,9 @@ public class AlfaBravoModule : MonoBehaviour {
 			ProcessAnswer(false);
 			Debug.LogFormat("[Alfa-Bravo #{0}] Answer skipped. Strike", moduleId);
 		} else if (++skipsCount >= MAX_SKIPS_COUNT) {
-			forceSolved = false;
+			_forceSolved = false;
 			Debug.LogFormat("[Alfa-Bravo #{0}] {1} skips pressed. Module solved", moduleId, MAX_SKIPS_COUNT);
+			_souvenirDisplayedDigit = Stage.character;
 			ProcessAnswer(true);
 		} else RandomizeLetters();
 	}
@@ -154,7 +173,13 @@ public class AlfaBravoModule : MonoBehaviour {
 		if (!active) return false;
 		bool correct = ButtonIsCorrect(index);
 		Debug.LogFormat("[Alfa-Bravo #{0}] Letter #{1} pressed. Answer is {2}", moduleId, index + 1, correct ? "correct" : "wrong");
-		if (correct) forceSolved = false;
+		if (correct) {
+			_forceSolved = false;
+			if (staticLetterIndices.Contains(index)) _souvenirPressedLetter = letters[index].character;
+			if (staticLetterIndices.Contains(index - 1)) _souvenirLetterToTheLeftOfPressedOne = letters[index - 1].character;
+			if (staticLetterIndices.Contains(index + 1)) _souvenirLetterToTheRightOfPressedOne = letters[index + 1].character;
+			_souvenirDisplayedDigit = Stage.character;
+		}
 		ProcessAnswer(correct);
 		return correct;
 	}
