@@ -60,8 +60,8 @@ public class AlfaBravoModule : MonoBehaviour {
 	private char _souvenirLetterToTheRightOfPressedOne = (char)0;
 	public char souvenirLetterToTheRightOfPressedOne { get { return _souvenirLetterToTheRightOfPressedOne; } }
 
-	private char _souvenirDisplayedDigit = (char)0;
-	public char souvenirDisplayedDigit { get { return _souvenirDisplayedDigit; } }
+	private int _souvenirDisplayedDigit = -1;
+	public int souvenirDisplayedDigit { get { return _souvenirDisplayedDigit; } }
 
 	private int _remainingMinutesCount;
 	public int remainingMinutesCount {
@@ -164,7 +164,7 @@ public class AlfaBravoModule : MonoBehaviour {
 		} else if (++skipsCount >= MAX_SKIPS_COUNT) {
 			_forceSolved = false;
 			Debug.LogFormat("[Alfa-Bravo #{0}] {1} skips pressed. Module solved", moduleId, MAX_SKIPS_COUNT);
-			_souvenirDisplayedDigit = Stage.character;
+			_souvenirDisplayedDigit = Stage.character - '0';
 			ProcessAnswer(true);
 		} else RandomizeLetters();
 	}
@@ -178,7 +178,7 @@ public class AlfaBravoModule : MonoBehaviour {
 			if (staticLetterIndices.Contains(index)) _souvenirPressedLetter = letters[index].character;
 			if (staticLetterIndices.Contains(index - 1)) _souvenirLetterToTheLeftOfPressedOne = letters[index - 1].character;
 			if (staticLetterIndices.Contains(index + 1)) _souvenirLetterToTheRightOfPressedOne = letters[index + 1].character;
-			_souvenirDisplayedDigit = Stage.character;
+			_souvenirDisplayedDigit = Stage.character - '0';
 		}
 		ProcessAnswer(correct);
 		return correct;
@@ -188,8 +188,10 @@ public class AlfaBravoModule : MonoBehaviour {
 		if (active) return;
 		for (int j = 0; j < 6; j++) if (!letters[j + 1].actual) return;
 		KMBombModule selfBombModule = GetComponent<KMBombModule>();
-		if (shouldPassOnActivation) selfBombModule.HandlePass();
-		else {
+		if (shouldPassOnActivation) {
+			selfBombModule.HandlePass();
+			_solved = true;
+		} else {
 			selfBombModule.HandleStrike();
 			readyToSkip = true;
 		}
