@@ -189,6 +189,7 @@ public class AlfaBravoModule : MonoBehaviour {
 		for (int j = 0; j < 6; j++) if (!letters[j + 1].actual) return;
 		KMBombModule selfBombModule = GetComponent<KMBombModule>();
 		if (shouldPassOnActivation) {
+			Audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.CorrectChime, transform);
 			selfBombModule.HandlePass();
 			_solved = true;
 		} else {
