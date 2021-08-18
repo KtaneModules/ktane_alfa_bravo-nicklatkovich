@@ -159,6 +159,7 @@ public class AlfaBravoModule : MonoBehaviour {
 		Debug.LogFormat("[Alfa-Bravo #{0}] \"SKIP\" button pressed", moduleId);
 		Audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.ButtonPress, this.transform);
 		if (active && ContainsAnswer()) {
+			skipsCount = 0;
 			ProcessAnswer(false);
 			Debug.LogFormat("[Alfa-Bravo #{0}] Answer skipped. Strike", moduleId);
 		} else if (++skipsCount >= MAX_SKIPS_COUNT) {
@@ -240,7 +241,7 @@ public class AlfaBravoModule : MonoBehaviour {
 	private IEnumerator ProcessTwitchCommand(string command) {
 		command = command.Trim().ToLower();
 		if (command.StartsWith("press ")) command = command.Skip(6).Join("").Trim();
-		if (Regex.IsMatch(command, @"[1-8]")) {
+		if (Regex.IsMatch(command, @"^[1-8]$")) {
 			if (!active) yield break;
 			bool solved = OnLetterPressed(int.Parse(command) - 1);
 			yield return null;
